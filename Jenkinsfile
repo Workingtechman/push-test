@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('push changes') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'github_jenkins_push_username_token', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        withCredentials([gitUsernamePassword(credentialsId: 'github_jenkins_push_username_token', gitToolName: 'Default')]) {
           echo "hello, i'm writing string parameter PARAM_ALL_FP, which is \"${env.PARAM_ALL_FP}\" to file pushingfile.txt"
           sh 'git status && echo "${PARAM_ALL_FP}" > pushingfile.txt && git config --global user.name "Jenkins dind" && git config --global user.email false@example.com && git add pushingfile.txt && git commit -a -m "made commit in pipeline" && git push origin HEAD:master'
         }
